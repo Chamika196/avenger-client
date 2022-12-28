@@ -31,7 +31,11 @@ class Avengers extends Component {
                 avenger => avenger.id !== avengerId
                 );
                 
-            await axios.delete(`http://localhost:5000/api/avengers/${avengerId}`);
+            await axios.delete(`http://localhost:5000/api/avengers/${avengerId}`,{
+                headers:{
+                    "x-jwt-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTMwNjk0ZTM3ZGI4ZDk3ZTE2YzUxYyIsInVzZXJuYW1lIjoiY2hhbWlrYSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY3MjE2MTcyNiwiZXhwIjoxNjcyMTk3NzI2fQ.oPoNj9FZyhJP2EgaKUz8yli3nzaU2aniyCHy3hsIjwE"
+                }
+            });
             this.setState({allAvengers: updatedAvengerArray});
         }
         async likeAvenger(avenger){
@@ -44,7 +48,7 @@ class Avengers extends Component {
                     //updated UI
                     let allAvengers = [...this.state.allAvengers];
                     let index = allAvengers.indexOf(avenger);
-                    allAvengers[index] = {... avenger};
+                    allAvengers[index] = {...avenger};
                     allAvengers[index].likeCount++;
                     this.setState({ allAvengers: allAvengers});
 
@@ -58,7 +62,11 @@ class Avengers extends Component {
 
         async componentDidMount (){
             console.log("Rendering finished...Component is fully mounted");
-            let {data} =await axios.get("http://localhost:5000/api/avengers");
+            let {data} =await axios.get("http://localhost:5000/api/avengers",{
+                headers:{
+                    "x-jwt-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTMwNjk0ZTM3ZGI4ZDk3ZTE2YzUxYyIsInVzZXJuYW1lIjoiY2hhbWlrYSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY3MjIyODgwMCwiZXhwIjoxNjcyMjY0ODAwfQ.5VfoyI5RJdNs4ast5rOf7jooP5VhQi7H24uysMWKB0M"
+                }
+            });
             console.log(data);
             let avengers = data.map(avenger => {
                 return{
